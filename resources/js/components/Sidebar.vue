@@ -29,7 +29,7 @@
 
     <div class="row">
         <div class="input-field col s12">
-            <input type="text" id="autocomplete-input" v-model.lazy="form.availability" class="autocomplete"  @input="MinChange">
+            <input type="text" id="autocomplete-input" v-model.lazy="form.available" class="autocomplete"  @input="MinChange">
             <label for="autocomplete-input">Availability</label>
         </div>
     </div>
@@ -49,7 +49,7 @@ export default {
                 min: '',
                 max: '',
                 category: '',
-                availability: '',
+                available: '',
             }
 
 
@@ -66,13 +66,6 @@ export default {
                 });
         }
     },
-// watch:{
-//     SearchData:function (el){
-//        this.$emit('ChangeProduct',el)
-//
-//    }
-// }
-
 
 }
 </script>

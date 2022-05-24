@@ -27,21 +27,19 @@ class ProductController extends Controller
         if (isset($request->data["max"])) {
             $products->where("price", "<", $request->data["max"]);
         }
+        if (isset($request->data["available"])) {
+            $products->where("available", $request->data["available"]);
+        }
 
         if (isset($request->data["category"])) {
             $text = $request->data["category"];
             $products->where( function($query) use ($text){
-                $query->whereHas('category', function($q) use ($text){
-                    $q->where('name', 'LIKE', '%' . $text . '%');
+                $query->whereHas('category', function($query1) use ($text){
+                    $query1->where('name', 'LIKE', '%' . $text . '%');
                 });
             });
 
         }
-
-        if (isset($request->data["availability"])) {
-            $products->where("availability" == $request->data["availability"]);
-        }
-
         return response()->json($products->get());
     }
 
