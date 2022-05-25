@@ -43,6 +43,7 @@
 
 <script>
 import Sidebar from "./Sidebar";
+import Services from "../services/BackService";
 export default {
     components:{
         Sidebar,
@@ -61,13 +62,11 @@ export default {
     },
 
     methods: {
-        getResults(page = 1) {
-            axios.get('/api/getProduct?page=' + page)
-                .then(response => {
-                    this.laravelData = response.data.data;
-                    this.links = response.data;
+        async getResults(page = 1) {
+                const  data = await Services.getProduct(page)
+            this.laravelData = data.data.data;
+            this.links = data.data
 
-                });
         },
         ChangeProduct(data){
                 this.laravelData = data

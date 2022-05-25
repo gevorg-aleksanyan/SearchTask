@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+import Services from "../services/BackService";
 export default {
     name: "Sidebar",
     data() {
@@ -52,18 +52,13 @@ export default {
                 available: '',
             }
 
-
-
         }
     },
     methods:{
-        MinChange(){
-            console.log(this.form)
-            axios.post("/api/searchProduct", {data: this.form})
-                .then(response => {
-                    this.SearchData = response.data;
-                    this.$emit('ChangeProduct',response.data)
-                });
+        async MinChange(){
+            const  data = await Services.searchProduct({data: this.form})
+            this.SearchData = data.data;
+            this.$emit('ChangeProduct',data.data)
         }
     },
 
