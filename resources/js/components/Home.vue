@@ -6,30 +6,7 @@
     </div>
 
     <div class="table_box">
-        <table class="table"
-        >
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Description</th>
-                <th scope="col">Category</th>
-                <th scope="col">In Store Availability</th>
-            </tr>
-            </thead>
-            <tbody>
-
-              <tr  v-for="product in laravelData" :key="product.id">
-                  <td>{{product.name}}</td>
-                  <td>{{product.price}}</td>
-                  <td>{{product.description}}</td>
-                  <td>{{product.category.name}}</td>
-                  <td>{{product.available}}</td>
-
-              </tr>
-
-            </tbody>
-        </table>
+       <Table :laravelData="laravelData"/>
         <pagination :data="links" @pagination-change-page="getResults"></pagination>
     </div>
 
@@ -43,43 +20,34 @@
 
 <script>
 import Sidebar from "./Sidebar";
+import Table from "./Table";
 import Services from "../services/BackService";
 export default {
-    components:{
-        Sidebar,
-
-    },
-
+    name:"Home",
+    components: {Table,Sidebar},
     data() {
         return {
             laravelData: [],
-            links:{},
+            links:{}
         }
     },
-    mounted() {
-        this.getResults();
 
-    },
-
-    methods: {
-        async getResults(page = 1) {
+        methods:{
+            async getResults(page = 1) {
                 const  data = await Services.getProduct(page)
-            this.laravelData = data.data.data;
-            this.links = data.data
+                this.laravelData = data.data.data;
+                this.links = data.data
 
-        },
-        ChangeProduct(data){
+            },
+
+            ChangeProduct(data){
                 this.laravelData = data
+            },
         },
 
-    },
-
-
-
-
-
-
-
+        mounted() {
+            this.getResults();
+        },
 
 }
 </script>
